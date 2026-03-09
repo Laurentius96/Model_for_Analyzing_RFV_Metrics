@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard RFV - Análise de Clientes</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.5.0/dist/Recharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .chart-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .segment-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .segment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .segment-name {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .segment-badge {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .segment-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .segment-stat {
+            text-align: center;
+        }
+
+        .segment-stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .segment-stat-label {
+            font-size: 0.8em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .segment-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = Recharts;
+
+        // Dados do dashboard (injetados)
+        const dashboardData = {"summary": {"total_customers": 4233, "total_revenue": 6129262.9399999995, "avg_ticket": 333.4123586906693, "avg_frequency": 4.022442712024569, "avg_recency": 90.39971651311127, "period_days": 364}, "segments": [{"Segment": "\u26a0\ufe0f At Risk", "customers": 454, "avg_recency": 162.46, "avg_frequency": 3.69, "avg_monetary": 1267.26, "total_revenue": 575337.96, "avg_ticket": 368.87, "pct_customers": 10.73, "pct_revenue": 9.39}, {"Segment": "\u2753 Other", "customers": 57, "avg_recency": 185.68, "avg_frequency": 1.39, "avg_monetary": 1310.47, "total_revenue": 74696.51, "avg_ticket": 1293.41, "pct_customers": 1.35, "pct_revenue": 1.22}, {"Segment": "\ud83c\udf1f Loyal Customers", "customers": 606, "avg_recency": 33.39, "avg_frequency": 4.39, "avg_monetary": 1499.89, "total_revenue": 908932.85, "avg_ticket": 344.16, "pct_customers": 14.32, "pct_revenue": 14.83}, {"Segment": "\ud83d\udc51 Champions", "customers": 866, "avg_recency": 11.69, "avg_frequency": 10.9, "avg_monetary": 4309.83, "total_revenue": 3732316.0, "avg_ticket": 388.33, "pct_customers": 20.46, "pct_revenue": 60.89}, {"Segment": "\ud83d\udc8e Potential Loyalists", "customers": 1078, "avg_recency": 30.86, "avg_frequency": 1.53, "avg_monetary": 459.17, "total_revenue": 494986.27, "avg_ticket": 321.26, "pct_customers": 25.47, "pct_revenue": 8.08}, {"Segment": "\ud83d\ude34 About to Sleep", "customers": 553, "avg_recency": 120.4, "avg_frequency": 1.57, "avg_monetary": 354.62, "total_revenue": 196106.71, "avg_ticket": 242.26, "pct_customers": 13.06, "pct_revenue": 3.2}, {"Segment": "\ud83e\udea6 Hibernating", "customers": 619, "avg_recency": 271.59, "avg_frequency": 1.04, "avg_monetary": 237.3, "total_revenue": 146886.64, "avg_ticket": 234.23, "pct_customers": 14.62, "pct_revenue": 2.4}], "score_distribution": {"recency": {"1": 844, "2": 839, "3": 831, "4": 864, "5": 855}, "frequency": {"1": 1537, "2": 797, "3": 504, "4": 593, "5": 802}, "monetary": {"1": 847, "2": 846, "3": 847, "4": 846, "5": 847}}, "top_rfv": {"111": 317, "555": 294, "112": 208, "455": 204, "211": 156, "311": 115, "312": 107, "212": 104, "223": 85, "411": 83}, "monthly_trend": [{"month": "2010-12", "customers": 857, "orders": 1335, "revenue": 428690.62}, {"month": "2011-01", "customers": 724, "orders": 953, "revenue": 359880.94}, {"month": "2011-02", "customers": 735, "orders": 951, "revenue": 341047.43}, {"month": "2011-03", "customers": 954, "orders": 1272, "revenue": 439568.5}, {"month": "2011-04", "customers": 832, "orders": 1096, "revenue": 358680.72000000003}, {"month": "2011-05", "customers": 1034, "orders": 1483, "revenue": 504219.31}, {"month": "2011-06", "customers": 977, "orders": 1344, "revenue": 451593.4}, {"month": "2011-07", "customers": 931, "orders": 1276, "revenue": 432876.99}, {"month": "2011-08", "customers": 909, "orders": 1216, "revenue": 463660.86}, {"month": "2011-09", "customers": 1241, "orders": 1688, "revenue": 697103.49}, {"month": "2011-10", "customers": 1347, "orders": 1847, "revenue": 736239.23}, {"month": "2011-11", "customers": 1637, "orders": 2566, "revenue": 915701.45}], "top_countries": [{"country": "United Kingdom", "customers": 3826, "revenue": 5131512.55}, {"country": "Germany", "customers": 92, "revenue": 177451.34}, {"country": "EIRE", "customers": 3, "revenue": 163585.23}, {"country": "France", "customers": 86, "revenue": 159626.4}, {"country": "Netherlands", "customers": 8, "revenue": 119125.08}, {"country": "Switzerland", "customers": 21, "revenue": 49131.11}, {"country": "Australia", "customers": 9, "revenue": 46997.69}, {"country": "Spain", "customers": 29, "revenue": 41323.41}, {"country": "Belgium", "customers": 25, "revenue": 34436.42}, {"country": "Norway", "customers": 10, "revenue": 26721.91}], "generated_at": "2026-03-09 17:27:45"};
+
+        const COLORS = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b', '#fa709a', '#fee140'];
+
+        function Dashboard() {
+            const { summary, segments, score_distribution, monthly_trend, top_countries } = dashboardData;
+
+            return (
+                <div className="dashboard-container">
+                    {/* Header */}
+                    <div className="header">
+                        <h1>📊 Dashboard RFV - Análise de Clientes</h1>
+                        <p>Análise completa de segmentação e comportamento de clientes | Período: Dez/2010 - Nov/2011</p>
+                    </div>
+
+                    {/* Métricas Principais */}
+                    <div className="metrics-grid">
+                        <div className="metric-card">
+                            <div className="metric-icon">👥</div>
+                            <div className="metric-value">{summary.total_customers.toLocaleString()}</div>
+                            <div className="metric-label">Total de Clientes</div>
+                        </div>
+
+                        <div className="metric-card">
+                            <div className="metric-icon">💰</div>
+                            <div className="metric-value">£{(summary.total_revenue / 1000000).toFixed(2)}M</div>
+                            <div className="metric-label">Receita Total</div>
+                        </div>
+
+                        <div className="metric-card">
+                            <div className="metric-icon">🎫</div>
+                            <div className="metric-value">£{summary.avg_ticket.toFixed(2)}</div>
+                            <div className="metric-label">Ticket Médio</div>
+                        </div>
+
+                        <div className="metric-card">
+                            <div className="metric-icon">🔄</div>
+                            <div className="metric-value">{summary.avg_frequency.toFixed(1)}</div>
+                            <div className="metric-label">Frequência Média</div>
+                        </div>
+                    </div>
+
+                    {/* Gráfico de Evolução Temporal */}
+                    <div className="chart-container">
+                        <div className="chart-title">📈 Evolução Mensal de Receita</div>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={monthly_trend}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="revenue" stroke="#667eea" strokeWidth={3} name="Receita (£)" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {/* Segmentos */}
+                    <div className="chart-container">
+                        <div className="chart-title">🎯 Segmentos de Clientes</div>
+                        {segments.map((segment, index) => (
+                            <div key={index} className="segment-card" style={{
+                                background: `linear-gradient(135deg, ${COLORS[index % COLORS.length]} 0%, ${COLORS[(index + 1) % COLORS.length]} 100%)`
+                            }}>
+                                <div className="segment-header">
+                                    <div className="segment-name">{segment.Segment}</div>
+                                    <div className="segment-badge">{segment.customers} clientes</div>
+                                </div>
+                                <div className="segment-stats">
+                                    <div className="segment-stat">
+                                        <div className="segment-stat-value">£{(segment.total_revenue / 1000).toFixed(0)}K</div>
+                                        <div className="segment-stat-label">Receita Total</div>
+                                    </div>
+                                    <div className="segment-stat">
+                                        <div className="segment-stat-value">{segment.pct_revenue.toFixed(1)}%</div>
+                                        <div className="segment-stat-label">% da Receita</div>
+                                    </div>
+                                    <div className="segment-stat">
+                                        <div className="segment-stat-value">{segment.avg_frequency.toFixed(1)}</div>
+                                        <div className="segment-stat-label">Frequência Média</div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Distribuição de Scores */}
+                    <div className="chart-container">
+                        <div className="chart-title">📊 Distribuição de Scores RFV</div>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={[
+                                {name: 'Score 1', Recency: score_distribution.recency[1] || 0, Frequency: score_distribution.frequency[1] || 0, Monetary: score_distribution.monetary[1] || 0},
+                                {name: 'Score 2', Recency: score_distribution.recency[2] || 0, Frequency: score_distribution.frequency[2] || 0, Monetary: score_distribution.monetary[2] || 0},
+                                {name: 'Score 3', Recency: score_distribution.recency[3] || 0, Frequency: score_distribution.frequency[3] || 0, Monetary: score_distribution.monetary[3] || 0},
+                                {name: 'Score 4', Recency: score_distribution.recency[4] || 0, Frequency: score_distribution.frequency[4] || 0, Monetary: score_distribution.monetary[4] || 0},
+                                {name: 'Score 5', Recency: score_distribution.recency[5] || 0, Frequency: score_distribution.frequency[5] || 0, Monetary: score_distribution.monetary[5] || 0}
+                            ]}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="Recency" fill="#ff6b6b" />
+                                <Bar dataKey="Frequency" fill="#4ecdc4" />
+                                <Bar dataKey="Monetary" fill="#95e1d3" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {/* Top Países */}
+                    <div className="chart-container">
+                        <div className="chart-title">🌍 Top 10 Países por Receita</div>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={top_countries} layout="vertical">
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis type="number" />
+                                <YAxis dataKey="country" type="category" width={100} />
+                                <Tooltip />
+                                <Bar dataKey="revenue" fill="#667eea" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="footer">
+                        <p>📊 Dashboard gerado automaticamente em {dashboardData.generated_at}</p>
+                        <p>🚀 Análise RFV - Data Science Project</p>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+{
+  "summary": {
+    "total_customers": 4233,
+    "total_revenue": 6129262.9399999995,
+    "avg_ticket": 333.4123586906693,
+    "avg_frequency": 4.022442712024569,
+    "avg_recency": 90.39971651311127,
+    "period_days": 364
+  },
+  "segments": [
+    {
+      "Segment": "⚠️ At Risk",
+      "customers": 454,
+      "avg_recency": 162.46,
+      "avg_frequency": 3.69,
+      "avg_monetary": 1267.26,
+      "total_revenue": 575337.96,
+      "avg_ticket": 368.87,
+      "pct_customers": 10.73,
+      "pct_revenue": 9.39
+    },
+    {
+      "Segment": "❓ Other",
+      "customers": 57,
+      "avg_recency": 185.68,
+      "avg_frequency": 1.39,
+      "avg_monetary": 1310.47,
+      "total_revenue": 74696.51,
+      "avg_ticket": 1293.41,
+      "pct_customers": 1.35,
+      "pct_revenue": 1.22
+    },
+    {
+      "Segment": "🌟 Loyal Customers",
+      "customers": 606,
+      "avg_recency": 33.39,
+      "avg_frequency": 4.39,
+      "avg_monetary": 1499.89,
+      "total_revenue": 908932.85,
+      "avg_ticket": 344.16,
+      "pct_customers": 14.32,
+      "pct_revenue": 14.83
+    },
+    {
+      "Segment": "👑 Champions",
+      "customers": 866,
+      "avg_recency": 11.69,
+      "avg_frequency": 10.9,
+      "avg_monetary": 4309.83,
+      "total_revenue": 3732316.0,
+      "avg_ticket": 388.33,
+      "pct_customers": 20.46,
+      "pct_revenue": 60.89
+    },
+    {
+      "Segment": "💎 Potential Loyalists",
+      "customers": 1078,
+      "avg_recency": 30.86,
+      "avg_frequency": 1.53,
+      "avg_monetary": 459.17,
+      "total_revenue": 494986.27,
+      "avg_ticket": 321.26,
+      "pct_customers": 25.47,
+      "pct_revenue": 8.08
+    },
+    {
+      "Segment": "😴 About to Sleep",
+      "customers": 553,
+      "avg_recency": 120.4,
+      "avg_frequency": 1.57,
+      "avg_monetary": 354.62,
+      "total_revenue": 196106.71,
+      "avg_ticket": 242.26,
+      "pct_customers": 13.06,
+      "pct_revenue": 3.2
+    },
+    {
+      "Segment": "🪦 Hibernating",
+      "customers": 619,
+      "avg_recency": 271.59,
+      "avg_frequency": 1.04,
+      "avg_monetary": 237.3,
+      "total_revenue": 146886.64,
+      "avg_ticket": 234.23,
+      "pct_customers": 14.62,
+      "pct_revenue": 2.4
+    }
+  ],
+  "score_distribution": {
+    "recency": {
+      "1": 844,
+      "2": 839,
+      "3": 831,
+      "4": 864,
+      "5": 855
+    },
+    "frequency": {
+      "1": 1537,
+      "2": 797,
+      "3": 504,
+      "4": 593,
+      "5": 802
+    },
+    "monetary": {
+      "1": 847,
+      "2": 846,
+      "3": 847,
+      "4": 846,
+      "5": 847
+    }
+  },
+  "top_rfv": {
+    "111": 317,
+    "555": 294,
+    "112": 208,
+    "455": 204,
+    "211": 156,
+    "311": 115,
+    "312": 107,
+    "212": 104,
+    "223": 85,
+    "411": 83
+  },
+  "monthly_trend": [
+    {
+      "month": "2010-12",
+      "customers": 857,
+      "orders": 1335,
+      "revenue": 428690.62
+    },
+    {
+      "month": "2011-01",
+      "customers": 724,
+      "orders": 953,
+      "revenue": 359880.94
+    },
+    {
+      "month": "2011-02",
+      "customers": 735,
+      "orders": 951,
+      "revenue": 341047.43
+    },
+    {
+      "month": "2011-03",
+      "customers": 954,
+      "orders": 1272,
+      "revenue": 439568.5
+    },
+    {
+      "month": "2011-04",
+      "customers": 832,
+      "orders": 1096,
+      "revenue": 358680.72000000003
+    },
+    {
+      "month": "2011-05",
+      "customers": 1034,
+      "orders": 1483,
+      "revenue": 504219.31
+    },
+    {
+      "month": "2011-06",
+      "customers": 977,
+      "orders": 1344,
+      "revenue": 451593.4
+    },
+    {
+      "month": "2011-07",
+      "customers": 931,
+      "orders": 1276,
+      "revenue": 432876.99
+    },
+    {
+      "month": "2011-08",
+      "customers": 909,
+      "orders": 1216,
+      "revenue": 463660.86
+    },
+    {
+      "month": "2011-09",
+      "customers": 1241,
+      "orders": 1688,
+      "revenue": 697103.49
+    },
+    {
+      "month": "2011-10",
+      "customers": 1347,
+      "orders": 1847,
+      "revenue": 736239.23
+    },
+    {
+      "month": "2011-11",
+      "customers": 1637,
+      "orders": 2566,
+      "revenue": 915701.45
+    }
+  ],
+  "top_countries": [
+    {
+      "country": "United Kingdom",
+      "customers": 3826,
+      "revenue": 5131512.55
+    },
+    {
+      "country": "Germany",
+      "customers": 92,
+      "revenue": 177451.34
+    },
+    {
+      "country": "EIRE",
+      "customers": 3,
+      "revenue": 163585.23
+    },
+    {
+      "country": "France",
+      "customers": 86,
+      "revenue": 159626.4
+    },
+    {
+      "country": "Netherlands",
+      "customers": 8,
+      "revenue": 119125.08
+    },
+    {
+      "country": "Switzerland",
+      "customers": 21,
+      "revenue": 49131.11
+    },
+    {
+      "country": "Australia",
+      "customers": 9,
+      "revenue": 46997.69
+    },
+    {
+      "country": "Spain",
+      "customers": 29,
+      "revenue": 41323.41
+    },
+    {
+      "country": "Belgium",
+      "customers": 25,
+      "revenue": 34436.42
+    },
+    {
+      "country": "Norway",
+      "customers": 10,
+      "revenue": 26721.91
+    }
+  ],
+  "generated_at": "2026-03-09 17:27:45"
+}
