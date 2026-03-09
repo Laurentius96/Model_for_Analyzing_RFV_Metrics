@@ -1,0 +1,10 @@
+,CustomerID,Recency,Frequency,Monetary,Monetary,AvgTicket
+,count,mean,mean,mean,sum,mean
+Segment,,,,,,
+⚠️ At Risk,454,162.46,3.69,1267.26,575337.96,368.87
+❓ Other,57,185.68,1.39,1310.47,74696.51,1293.41
+🌟 Loyal Customers,606,33.39,4.39,1499.89,908932.85,344.16
+👑 Champions,866,11.69,10.9,4309.83,3732316.0,388.33
+💎 Potential Loyalists,1078,30.86,1.53,459.17,494986.27,321.26
+😴 About to Sleep,553,120.4,1.57,354.62,196106.71,242.26
+🪦 Hibernating,619,271.59,1.04,237.3,146886.64,234.23
