@@ -1,6 +1,6 @@
-readme_content = '''<div align="center">
-  <h1>📊 RFV Analysis - Customer Segmentation</h1>
-  <p><i>Complete RFV (Recency, Frequency, Monetary) analysis pipeline with interactive dashboard and strategic insights</i></p>
+<div align="center">  <h1> DNC | Data Science </div>
+<div align="center"> <h1>📊 RFV Analysis - Customer Segmentation</h1> </div>
+<div align="center"> <p><i>Complete RFV (Recency, Frequency, Monetary) analysis pipeline with interactive dashboard and strategic insights</i></p>
 </div>
 
 <p align="center">
@@ -537,18 +537,3 @@ For more details, see the [LICENSE.md](LICENSE.md) file.
   </p>
 </div>
 '''
-
-readme_path = os.path.join(output_dir, 'README.md')
-with open(readme_path, 'w', encoding='utf-8') as f:
-    f.write(readme_content)
-
-print(f"✅ README.md profissional criado: {readme_path}")
-print("   • Seguindo o padrão dos seus projetos")
-print("   • Com badges, tabelas e formatação completa")
-print("   • Seções detalhadas e organizadas")
-print("   • Links de navegação rápida")
-
-print("\n" + "="*80)
-print("🎉 README.md CRIADO COM SUCESSO!")
-print("="*80)
-```
