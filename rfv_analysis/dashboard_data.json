@@ -9,26 +9,15 @@
   },
   "segments": [
     {
-      "Segment": "⚠️ At Risk",
-      "customers": 454,
-      "avg_recency": 162.46,
-      "avg_frequency": 3.69,
-      "avg_monetary": 1267.26,
-      "total_revenue": 575337.96,
-      "avg_ticket": 368.87,
-      "pct_customers": 10.73,
-      "pct_revenue": 9.39
-    },
-    {
-      "Segment": "❓ Other",
-      "customers": 57,
-      "avg_recency": 185.68,
-      "avg_frequency": 1.39,
-      "avg_monetary": 1310.47,
-      "total_revenue": 74696.51,
-      "avg_ticket": 1293.41,
-      "pct_customers": 1.35,
-      "pct_revenue": 1.22
+      "Segment": "👑 Champions",
+      "customers": 866,
+      "avg_recency": 11.69,
+      "avg_frequency": 10.9,
+      "avg_monetary": 4309.83,
+      "total_revenue": 3732316.0,
+      "avg_ticket": 388.33,
+      "pct_customers": 20.46,
+      "pct_revenue": 60.89
     },
     {
       "Segment": "🌟 Loyal Customers",
@@ -42,15 +31,15 @@
       "pct_revenue": 14.83
     },
     {
-      "Segment": "👑 Champions",
-      "customers": 866,
-      "avg_recency": 11.69,
-      "avg_frequency": 10.9,
-      "avg_monetary": 4309.83,
-      "total_revenue": 3732316.0,
-      "avg_ticket": 388.33,
-      "pct_customers": 20.46,
-      "pct_revenue": 60.89
+      "Segment": "⚠️ At Risk",
+      "customers": 454,
+      "avg_recency": 162.46,
+      "avg_frequency": 3.69,
+      "avg_monetary": 1267.26,
+      "total_revenue": 575337.96,
+      "avg_ticket": 368.87,
+      "pct_customers": 10.73,
+      "pct_revenue": 9.39
     },
     {
       "Segment": "💎 Potential Loyalists",
@@ -84,6 +73,17 @@
       "avg_ticket": 234.23,
       "pct_customers": 14.62,
       "pct_revenue": 2.4
+    },
+    {
+      "Segment": "❓ Other",
+      "customers": 57,
+      "avg_recency": 185.68,
+      "avg_frequency": 1.39,
+      "avg_monetary": 1310.47,
+      "total_revenue": 74696.51,
+      "avg_ticket": 1293.41,
+      "pct_customers": 1.35,
+      "pct_revenue": 1.22
     }
   ],
   "score_distribution": {
@@ -150,7 +150,7 @@
       "month": "2011-04",
       "customers": 832,
       "orders": 1096,
-      "revenue": 358680.72000000003
+      "revenue": 358680.72
     },
     {
       "month": "2011-05",
@@ -247,5 +247,5 @@
       "revenue": 26721.91
     }
   ],
-  "generated_at": "2026-03-09 17:27:45"
+  "generated_at": "2026-10-10 19:48"
 }

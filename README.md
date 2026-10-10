@@ -1,513 +1,231 @@
-<div align="center">  <h1> DNC | Data Science </div>
-<div align="center"> <h1>📊 RFV Analysis - Customer Segmentation</h1> </div>
-<div align="center"> <p><i>Complete RFV (Recency, Frequency, Monetary) analysis pipeline with interactive dashboard and strategic insights</i></p>
-</div>
+<div align="center">
 
-<p align="center">
+# 📊 RFV Analysis: Customer Segmentation
+
+**From 541,909 raw invoice lines to 7 actionable customer segments, CRM-ready lists and an interactive dashboard**
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
+![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Laurentius96/Model_for_Analyzing_RFV_Metrics/blob/main/notebooks/main_analysis.ipynb)
+
+<p>
   <a href="#-overview">Overview</a> •
-  <a href="#-objective">Objective</a> •
-  <a href="#%EF%B8%8F-technologies-used">Technologies</a> •
-  <a href="#-project-structure">Project Structure</a> •
-  <a href="#-data-pipeline">Data Pipeline</a> •
-  <a href="#-segmentation-strategy">Segmentation</a> •
-  <a href="#-results-and-insights">Results & Insights</a> •
+  <a href="#-dataset">Dataset</a> •
+  <a href="#-pipeline">Pipeline</a> •
+  <a href="#-segmentation">Segmentation</a> •
+  <a href="#-key-insights">Insights</a> •
+  <a href="#-interactive-dashboard">Dashboard</a> •
   <a href="#-how-to-use">How to Use</a> •
-  <a href="#-deliverables">Deliverables</a> •
-  <a href="#-next-steps">Next Steps</a> •
+  <a href="#-limitations-and-next-steps">Limitations</a> •
   <a href="#-license">License</a>
 </p>
+
+</div>
 
 ---
 
 ## 🔍 Overview
 
-This project implements a **complete RFV (Recency, Frequency, Monetary) analysis pipeline** for customer segmentation using the Online Retail dataset. It combines data cleaning, statistical analysis, strategic segmentation, and interactive visualization to deliver actionable business insights.
+Which customers bring the most value, which ones are slipping away, and what should marketing do about each group? This project answers those questions with an **RFV (Recency, Frequency, Value)** analysis of a UK-based online retailer:
 
-The project demonstrates essential **Data Science and Business Intelligence skills** including:
-- Exploratory Data Analysis (EDA) with 541,909 transactions
-- Advanced data cleaning and preprocessing
-- RFV score calculation using percentile-based methodology
-- Strategic customer segmentation into 7 actionable groups
-- Interactive dashboard development with React and Recharts
-- ROI-focused recommendations with £965K opportunity identification
+| | |
+|---|---:|
+| 🧾 Raw invoice lines | 541,909 |
+| ✅ Clean lines used | 365,327 (67.4%) |
+| 👥 Customers segmented | 4,233 |
+| 💷 Revenue analysed | £6.13M |
+| 📅 Period | 1 Dec 2010 to 30 Nov 2011 |
 
-**Key Achievement**: Identified that 20% of customers (Champions) generate 61% of revenue, confirming the Pareto Principle and enabling targeted marketing strategies with projected 7.7:1 ROI.
+> **Headline:** 👑 **Champions are 20.5% of the customers and generate 60.9% of the revenue.**
 
----
+> Built as a DNC School Data Science challenge.
 
-## 🎯 Objective
+## 📊 Dataset
 
-The main goal is to segment customers based on their purchasing behavior and provide strategic recommendations through a systematic approach that ensures:
+[Online Retail dataset](https://archive.ics.uci.edu/dataset/352/online+retail) from the UCI Machine Learning Repository: transactions of a UK-based online store that mainly sells unique all-occasion gifts; many of its customers are wholesalers. The raw file is [`dataset/data.csv`](dataset/data.csv).
 
-1. **Data Quality**: Clean and validate 541,909 transactions from Dec/2010 to Nov/2011
-2. **RFV Calculation**: Compute Recency, Frequency, and Monetary metrics for 4,233 customers
-3. **Score Assignment**: Create 1-5 scores using percentile-based methodology
-4. **Strategic Segmentation**: Classify customers into 7 actionable groups
-5. **Business Insights**: Identify £965K in growth opportunities (+15.75% revenue increase)
-6. **Interactive Visualization**: Deliver web-based dashboard and executive report
+<details>
+<summary><b>📖 Columns and data-quality findings</b></summary>
+<br>
 
----
+| Column | Description |
+|---|---|
+| `InvoiceNo` | Invoice number; a leading `C` marks a cancellation |
+| `StockCode` | Product code |
+| `Description` | Product name |
+| `Quantity` | Units per line (negative for returns) |
+| `InvoiceDate` | Date and time of the invoice |
+| `UnitPrice` | Price per unit (£) |
+| `CustomerID` | Customer identifier |
+| `Country` | Customer country |
 
-## 🛠️ Technologies Used
+| Finding | Value |
+|---|---|
+| Missing `CustomerID` | 135,080 lines (24.93%) |
+| Missing `Description` | 1,454 lines (0.27%) |
+| Exact duplicate lines | 5,268 (0.97%) |
+| Cancellation lines | 9,288 (1.71%) |
+| Negative `Quantity` | 10,624 (1.96%) |
+| `UnitPrice` equal to 0 | 2,515 (0.46%) |
+| United Kingdom share | 91.43% of lines, 38 countries in total |
+| Transactions on Saturdays | none |
+
+</details>
+
+## 🔄 Pipeline
+
+```mermaid
+flowchart LR
+    A[Raw data<br/>541,909 lines] --> B[Cleaning<br/>365,327 lines]
+    B --> C[RFV metrics<br/>4,233 customers]
+    C --> D[Quintile scores<br/>1 to 5]
+    D --> E[Ordered rules<br/>7 segments]
+    E --> F[CRM lists, JSON,<br/>dashboard and report]
+```
+
+### Cleaning steps
+
+| Step | Rows left | Removed | % of raw |
+|---|---:|---:|---:|
+| Raw data | 541,909 | — | — |
+| Remove December 2011 (only 9 days of data) | 516,384 | 25,525 | 4.71% |
+| Remove lines without `CustomerID` | 389,168 | 127,216 | 23.48% |
+| Remove cancellations | 380,620 | 8,548 | 1.58% |
+| Keep `Quantity > 0` and `UnitPrice > 0` | 380,580 | 40 | 0.01% |
+| Remove values outside the 1st–99th percentiles of `Quantity`, `UnitPrice` and `TotalAmount` | **365,327** | 15,253 | 2.81% |
+
+### RFV metrics and scores
+
+- **Recency:** days since the customer's last purchase, measured from the last date in the clean data (30 Nov 2011)
+- **Frequency:** number of distinct invoices
+- **Value (Monetary):** total spent, with `TotalAmount = Quantity × UnitPrice`
+
+Each metric is split into **quintiles** and scored from 1 to 5, where **5 is best** (most recent, most frequent, highest value):
+
+| Score | Recency (days) | Frequency (orders) | Monetary (£) |
+|:-:|---|---|---|
+| 5 | ≤ 12 | > 5 | > 1,794 |
+| 4 | 13–31 | 4–5 | 833–1,794 |
+| 3 | 32–68 | 3 | 428–832 |
+| 2 | 69–176 | 2 | 224–428 |
+| 1 | > 176 | 1 | ≤ 224 |
+
+## 🎯 Segmentation
+
+Rules are evaluated **in order** and the first match wins:
+
+| Segment | Rule | Customers | % customers | Revenue | % revenue | Avg. recency | Avg. orders |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 👑 Champions | R≥4, F≥4, M≥4 | 866 | 20.46% | £3,732,316 | **60.89%** | 11.7 days | 10.9 |
+| 🌟 Loyal Customers | R≥3, F≥3, M≥3 | 606 | 14.32% | £908,933 | 14.83% | 33.4 days | 4.4 |
+| ⚠️ At Risk | R≤2, F≥2, M≥2 | 454 | 10.73% | £575,338 | 9.39% | 162.5 days | 3.7 |
+| 💎 Potential Loyalists | R≥3 | 1,078 | 25.47% | £494,986 | 8.08% | 30.9 days | 1.5 |
+| 😴 About to Sleep | R=2, F≤3, M≤3 | 553 | 13.06% | £196,107 | 3.20% | 120.4 days | 1.6 |
+| 🪦 Hibernating | R≤2, F≤2, M≤3 | 619 | 14.62% | £146,887 | 2.40% | 271.6 days | 1.0 |
+| ❓ Other | everything else | 57 | 1.35% | £74,697 | 1.22% | 185.7 days | 1.4 |
+
+## 💡 Key Insights
+
+| Topic | Finding | Suggested action |
+|---|---|---|
+| 👑 Concentration | Champions: **20.5% of customers, 60.9% of revenue** | Loyalty perks, early access and referrals; protect this group first |
+| 💰 Top 3 segments | Champions, Loyal Customers and At Risk hold **85.1%** of revenue | Prioritize budget on these three |
+| 💎 Biggest group | Potential Loyalists: **1,078 customers (25.5%)**, recent but only 1.5 orders | Second-purchase journey with onboarding emails and time-limited incentives |
+| ⚠️ Revenue at risk | At Risk: **454 customers, £575K** of historical revenue, 162 days without buying | Personalized win-back, starting with the highest historical value |
+| 🔁 Retention | **36.3% of customers bought only once** | Retention is the main growth lever |
+| ❓ Other | 57 lapsed customers with one high-value order (avg. ticket £1,293) | Investigate why they left |
+| 📈 Seasonality | Revenue climbs from September and peaks in **November 2011 (£916K)** | Plan stock and campaigns for Q4 |
+
+## 🖥️ Interactive Dashboard
 
 <div align="center">
-
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) | Core programming language | 3.11+ |
-| ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) | Data manipulation and analysis | 2.0+ |
-| ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white) | Numerical computing | 1.24+ |
-| ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge&logo=python&logoColor=white) | Data visualization | 3.7+ |
-| ![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=for-the-badge&logo=python&logoColor=white) | Statistical visualization | 0.12+ |
-| ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) | Interactive dashboard | 18.0+ |
-| ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge&logo=chartdotjs&logoColor=white) | Chart components | 2.5+ |
-| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) | Dashboard structure | - |
-| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) | Dashboard styling | - |
-| ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white) | Interactive development | - |
-
+  <img src="assets/dashboard_preview.png" alt="RFV dashboard with KPIs, monthly revenue line chart, segment cards, score distribution and top 10 countries by revenue" width="85%">
 </div>
 
----
+The notebook generates a self-contained dashboard (React + Recharts), a printable executive report and an index page in [`rfv_analysis/`](rfv_analysis). Download the repository and open `rfv_analysis/index.html` in your browser.
+
+**Deliverables generated by the notebook**
+
+| File | Content |
+|---|---|
+| `rfv_segmentation_complete.csv` | 4,233 customers with metrics, scores and segment |
+| `champions_list.csv` | 866 Champions for a loyalty program |
+| `at_risk_urgent.csv` | 454 At Risk customers for a win-back campaign |
+| `potential_loyalists_email.csv` | 1,078 Potential Loyalists for email nurturing |
+| `segment_summary.csv` | Statistics per segment |
+| `online_retail_cleaned.csv` | 365,327 clean transaction lines |
+| `dashboard_data.json` | Aggregated data behind the dashboard |
+| `index.html`, `dashboard_interactive.html`, `executive_report.html` | Dashboard, report and index page |
 
 ## 📁 Project Structure
 
 ```
-09_Model_for_Analyzing_RFV_Metrics/
-│
-├── 📓 notebooks/
-│   ├── main_analysis.ipynb                    # Main analysis notebook
-│   └── rfv_analysis/                          # Output directory
-│       ├── 🏠 index.html                      # Portal page
-│       ├── 📊 dashboard_interativo.html       # Interactive dashboard
-│       ├── 📄 relatorio_executivo.html        # Executive report
-│       ├── 📋 dashboard_data.json             # Structured data
-│       ├── 📊 rfv_segmentation_complete.csv   # Complete segmentation
-│       ├── 👑 champions_list.csv              # VIP customers
-│       ├── ⚠️ at_risk_urgent.csv              # At-risk customers
-│       ├── 💎 potential_loyalists_email.csv   # Potential loyalists
-│       ├── 📈 segment_summary.csv             # Segment statistics
-│       ├── 🧹 online_retail_cleaned.csv       # Cleaned dataset
-│       ├── 🐍 rfv_pipeline.py                 # Reusable pipeline
-│       └── 📝 README.md                       # Documentation
-│
-├── 📊 data/
-│   └── Online Retail.xlsx                     # Original dataset
-│
-├── 📄 README.md                               # This file
-└── 📜 LICENSE.md                              # License information
+📁 Model_for_Analyzing_RFV_Metrics/
+├── 📁 dataset/
+│   └── 📄 data.csv                      # Raw Online Retail data (541,909 lines)
+├── 📁 notebooks/
+│   └── 📓 main_analysis.ipynb           # Full analysis with outputs and charts
+├── 📁 rfv_analysis/                     # Everything the notebook exports
+│   ├── 📄 *.csv                         # Segments, CRM lists and clean data
+│   ├── 📋 dashboard_data.json
+│   └── 🌐 index.html, dashboard_interactive.html, executive_report.html
+├── 📁 assets/
+│   └── 🖼️ dashboard_preview.png
+├── 📄 requirements.txt
+├── 📄 LICENSE.md                        # CC BY-NC-ND 4.0
+└── 📄 README.md
 ```
-
----
-
-## 🔄 Data Pipeline
-
-### 1️⃣ **Data Loading and Initial Exploration**
-
-```python
-# Load dataset
-df = pd.read_excel('Online Retail.xlsx')
-
-# Initial statistics
-- Total transactions: 541,909
-- Variables: 8 (4 numerical, 4 categorical)
-- Period: Dec/2010 to Dec/2011
-- Countries: 38
-- Customers: 4,372 (with CustomerID)
-```
-
-### 2️⃣ **Data Cleaning and Preprocessing**
-
-**Removed Records (176,582 - 32.59%)**:
-- ❌ Missing CustomerID: 127,216 (23.47%)
-- ❌ Cancellations (InvoiceNo starting with 'C'): 8,548 (1.58%)
-- ❌ Outliers (IQR method): 15,253 (4.01%)
-- ❌ Incomplete December 2011: 25,525 (4.71%)
-
-**Final Clean Dataset**: 365,327 transactions
-
-### 3️⃣ **RFV Calculation**
-
-```python
-# Reference date: 2011-12-01 (last complete month)
-
-# Recency: Days since last purchase
-recency = (reference_date - last_purchase_date).days
-
-# Frequency: Number of unique purchases
-frequency = df.groupby('CustomerID')['InvoiceNo'].nunique()
-
-# Monetary: Total amount spent
-monetary = df.groupby('CustomerID')['TotalAmount'].sum()
-```
-
-**RFV Statistics**:
-- Recency: 0 to 364 days (mean: 91.3 days)
-- Frequency: 1 to 194 purchases (mean: 2.8 purchases)
-- Monetary: £1.25 to £114,558 (mean: £1,448)
-
-### 4️⃣ **Score Assignment (1-5 Scale)**
-
-Using **percentile-based methodology**:
-
-| Score | Percentile Range | Interpretation |
-|-------|------------------|----------------|
-| 5 | Top 20% | Excellent |
-| 4 | 60-80% | Very Good |
-| 3 | 40-60% | Good |
-| 2 | 20-40% | Fair |
-| 1 | Bottom 20% | Poor |
-
-**Note**: For Recency, lower is better (inverted scale)
-
-### 5️⃣ **Customer Segmentation**
-
-7 strategic segments based on RFV score combinations:
-
-| Segment | Criteria | Customers | % Base | Revenue | % Revenue |
-|---------|----------|-----------|--------|---------|-----------|
-| 👑 Champions | R≥4, F≥4, M≥4 | 866 | 20.46% | £3.7M | 60.89% |
-| 🌟 Loyal Customers | R≥3, F≥3, M≥3 | 606 | 14.32% | £908K | 14.83% |
-| 💎 Potential Loyalists | R≥3, F≥1, M≥1 | 1,078 | 25.47% | £494K | 8.08% |
-| ⚠️ At Risk | R≤2, F≥2, M≥2 | 454 | 10.73% | £575K | 9.39% |
-| 😴 About to Sleep | R=2, F≤3, M≤3 | 553 | 13.06% | £196K | 3.20% |
-| 🪦 Hibernating | R≤2, F≤2, M≤3 | 619 | 14.62% | £146K | 2.40% |
-| ❓ Other | Other combinations | 57 | 1.35% | £74K | 1.22% |
-
----
-
-## 🎯 Segmentation Strategy
-
-### 👑 **Champions (VIP) - 866 customers**
-
-**Profile**:
-- Recency: 11.7 days (bought very recently)
-- Frequency: 10.9 purchases (highly loyal)
-- Monetary: £4,309 (high spenders)
-- Revenue: £3.7M (60.89% of total)
-
-**Strategy**: REWARD AND RETAIN
-- VIP program with exclusive benefits
-- Early access to new products
-- 5-10% cashback on all purchases
-- Priority customer service
-
-**Investment**: £50K | **Expected ROI**: 10:1 (£500K)
-
----
-
-### 🌟 **Loyal Customers - 606 customers**
-
-**Profile**:
-- Recency: 33.4 days
-- Frequency: 4.4 purchases
-- Monetary: £1,499
-- Revenue: £908K (14.83% of total)
-
-**Strategy**: UPSELL AND CROSS-SELL
-- Loyalty program with points
-- Personalized offers based on history
-- Incentives to increase average ticket
-
-**Investment**: £20K | **Expected ROI**: 6:1 (£120K)
-
----
-
-### 💎 **Potential Loyalists - 1,078 customers**
-
-**Profile**:
-- Recency: 30.9 days (recent purchase)
-- Frequency: 1.5 purchases (low repeat rate)
-- Monetary: £459
-- Revenue: £494K (8.08% of total)
-
-**Strategy**: CONVERT TO LOYAL CUSTOMERS
-- Email marketing sequence (5 emails in 30 days)
-- Progressive coupons: 10% → 15% → 20%
-- Facebook/Google Ads remarketing
-- Incentive for 2nd purchase
-
-**Investment**: £30K | **Expected ROI**: 8:1 (£240K)
-
-💡 **BIGGEST OPPORTUNITY**: If we convert 30%, we generate +£1.4M!
-
----
-
-### ⚠️ **At Risk - 454 customers**
-
-**Profile**:
-- Recency: 162.5 days (5+ months without purchase)
-- Frequency: 3.7 purchases (good history)
-- Monetary: £1,267 (valuable customers)
-- Revenue at Risk: £575K (9.39% of total)
-
-**Strategy**: URGENT REACTIVATION
-- Personalized email: "We miss you!"
-- 20% coupon valid for 15 days
-- Phone call to top 50 customers
-- Satisfaction survey
-
-**Investment**: £15K | **Expected ROI**: 5:1 (£75K)
-
-🚨 **IMMEDIATE ACTION REQUIRED!**
-
----
-
-### 😴 **About to Sleep - 553 customers**
-
-**Profile**:
-- Recency: 120.4 days (4 months)
-- Low value and frequency
-- Revenue: £196K (3.20% of total)
-
-**Strategy**: WIN-BACK CAMPAIGN
-- Aggressive discounts (30% OFF)
-- SMS marketing
-- Cart abandonment reminders
-
-**Investment**: £10K | **Expected ROI**: 3:1 (£30K)
-
----
-
-### 🪦 **Hibernating - 619 customers**
-
-**Profile**:
-- Recency: 271.6 days (9 months)
-- Frequency: 1 purchase only
-- Revenue: £146K (2.40% of total)
-
-**Strategy**: LAST ATTEMPT OR REMOVAL
-- Generic email with high discount
-- Passive remarketing
-- Consider removing from active list
-
-**Savings**: £5K/year in email costs
-
----
-
-## 📊 Results and Insights
-
-### 🔍 **Key Findings**
-
-1. **Pareto Principle Confirmed**
-   - 20% of customers (Champions) generate 61% of revenue
-   - Extreme value concentration in few customers
-   - **Action**: Protect Champions at all costs!
-
-2. **Massive Opportunity**
-   - 1,078 Potential Loyalists (25% of base)
-   - Bought recently (30 days), but only 1.5x
-   - If we convert 30% to Champions: +£1.4M in revenue!
-
-3. **Red Alert**
-   - 454 "At Risk" customers (£575K at risk)
-   - Haven't purchased in 162 days, but have good history
-   - Urgent reactivation campaign can recover 50%
-
-4. **Retention Problem**
-   - 36% of customers purchased ONLY ONCE
-   - 1,537 customers with Frequency Score = 1
-   - Focus on 2nd purchase strategies is ESSENTIAL
-
-5. **Geographic Concentration**
-   - UK represents 91% of transactions
-   - Limited international expansion opportunity
-   - Or: Total focus on UK market to maximize ROI
-
----
-
-### 💰 **Financial Impact**
-
-**Current Situation**:
-- Revenue: £6,129,262
-- Customers: 4,233
-- Average Ticket: £333.41
-- Average Frequency: 2.8 purchases
-
-**Projection (12 months)**:
-- Revenue: £7,094,262 (+£965K)
-- Growth: +15.75%
-- ROI: 7.7:1 (£125K invested)
-
-**Action Plan**:
-
-| Action | Segment | Investment | ROI | Additional Revenue |
-|--------|---------|------------|-----|-------------------|
-| VIP Program | Champions (866) | £50K | 10:1 | £500K |
-| Email Marketing | Potential (1,078) | £30K | 8:1 | £240K |
-| Reactivation | At Risk (454) | £15K | 5:1 | £75K |
-| Loyalty Program | Loyal (606) | £20K | 6:1 | £120K |
-| Win-back Campaign | About to Sleep (553) | £10K | 3:1 | £30K |
-| **TOTAL** | **3,557 customers** | **£125K** | **7.7:1** | **£965K** |
-
----
 
 ## 🚀 How to Use
 
-### **Prerequisites**
+1. **Clone the repository**
 
-```bash
-# Python 3.11+
-pip install pandas numpy matplotlib seaborn openpyxl jupyter
-```
+   ```bash
+   git clone https://github.com/Laurentius96/Model_for_Analyzing_RFV_Metrics.git
+   cd Model_for_Analyzing_RFV_Metrics
+   ```
 
-### **1️⃣ Run Analysis**
+2. **Install the dependencies**
 
-```bash
-# Open Jupyter Notebook
-jupyter notebook notebooks/main_analysis.ipynb
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Or run pipeline directly
-python rfv_analysis/rfv_pipeline.py
-```
+3. **Run the notebook** from the `notebooks/` folder (paths are relative to it)
 
-### **2️⃣ View Dashboards**
+   ```bash
+   cd notebooks
+   jupyter notebook main_analysis.ipynb
+   ```
 
-**Option A: Portal Page**
-```bash
-# Open in browser
-rfv_analysis/index.html
-```
+4. **Open the dashboard:** `rfv_analysis/index.html` in any modern browser.
 
-**Option B: Direct Access**
-- `dashboard_interativo.html` → Interactive dashboard
-- `relatorio_executivo.html` → Executive report
+> 💡 **In Google Colab:** run this in the first cell, then run all cells.
+>
+> ```python
+> !git clone https://github.com/Laurentius96/Model_for_Analyzing_RFV_Metrics.git
+> %cd Model_for_Analyzing_RFV_Metrics/notebooks
+> ```
 
-### **3️⃣ Use Data in CRM**
+## 🧭 Limitations and Next Steps
 
-1. Import `champions_list.csv` into your CRM
-2. Set up campaign with `at_risk_urgent.csv`
-3. Email marketing with `potential_loyalists_email.csv`
+**Limitations**
+- 5,268 exact duplicate lines (0.97% of the raw data) were kept; they can slightly inflate Monetary.
+- Scores are quintiles of this customer base, so they are relative; the Frequency quintiles are compressed because 36% of customers have a single order.
+- Segment rules are business judgment and were not validated statistically.
+- Results are dominated by UK customers (91% of the raw lines).
 
-### **4️⃣ Monthly Updates**
-
-```bash
-# Update analysis with new data
-python rfv_pipeline.py --input new_data.csv --output rfv_results/
-```
-
----
-
-## 📦 Deliverables
-
-### **Interactive Dashboards**
-- ✅ `index.html` - Portal page with navigation
-- ✅ `dashboard_interativo.html` - Interactive dashboard with Recharts
-- ✅ `relatorio_executivo.html` - Executive report (print-ready)
-
-### **Data Files**
-- ✅ `rfv_segmentation_complete.csv` - 4,233 customers with scores
-- ✅ `champions_list.csv` - 866 VIP customers
-- ✅ `at_risk_urgent.csv` - 454 at-risk customers
-- ✅ `potential_loyalists_email.csv` - 1,078 potential customers
-- ✅ `segment_summary.csv` - Statistical summary by segment
-- ✅ `online_retail_cleaned.csv` - 365,327 clean transactions
-- ✅ `dashboard_data.json` - Structured data for integration
-
-### **Code**
-- ✅ `main_analysis.ipynb` - Complete analysis notebook
-- ✅ `rfv_pipeline.py` - Reusable pipeline for monthly updates
-
-### **Documentation**
-- ✅ `README.md` - Complete project documentation
-- ✅ Technical justifications for all decisions
-- ✅ DNC Challenge compliance checklist
-
----
-
-## ✅ DNC Challenge Compliance
-
-All requirements were successfully met:
-
-- ✅ **Exploratory Data Analysis (EDA)**
-  - Analysis of 541,909 initial transactions
-  - Identification of 8 variables (4 numerical, 4 categorical)
-  - Detection and treatment of missing values (23.47% without CustomerID)
-  - Identification of duplicates and outliers
-  - Complete temporal analysis (12 months)
-  - Geographic analysis (38 countries)
-
-- ✅ **Data Cleaning and Preprocessing**
-  - Removal of 176,582 invalid records (32.59%)
-  - Treatment of missing values (CustomerID)
-  - Removal of cancellations (8,548 records)
-  - Outlier treatment using IQR method (percentiles 1-99%)
-  - Creation of TotalAmount variable
-  - Date parsing with validation
-  - Final dataset: 365,327 valid transactions
-
-- ✅ **RFV Calculation**
-  - Recency: Days since last purchase (0-364 days)
-  - Frequency: Number of unique purchases (1-194)
-  - Monetary: Total amount spent (£1.25 - £114,558)
-  - Average ticket calculation per customer
-  - Aggregation by CustomerID
-
-- ✅ **Score Creation (1-5 Scale)**
-  - R_Score: Based on percentiles (lower = better)
-  - F_Score: Based on percentiles (higher = better)
-  - M_Score: Based on percentiles (higher = better)
-  - Robust treatment of duplicate values
-  - Combined RFV_Score (concatenation)
-  - RFV_Total (sum of scores)
-
-- ✅ **Strategic Segmentation**
-  - 7 main segments identified
-  - Segmentation logic based on RFV combinations
-  - Statistical analysis by segment
-  - Champions identification (866 VIP customers)
-  - At-risk customer mapping
-
-- ✅ **Visualizations**
-  - 12+ professional charts created
-  - RFV score distribution
-  - 3D segmentation matrix
-  - Recency vs Frequency heatmap
-  - Pareto analysis (80/20)
-  - Distribution boxplots
-  - Temporal evolution charts
-
-- ✅ **Insights and Recommendations**
-  - Pareto Law identification (20/80)
-  - Quantified growth opportunities (£965K)
-  - Specific strategies by segment
-  - Action prioritization (High/Medium/Low)
-  - ROI projection by campaign
-  - Implementation roadmap (12 months)
-
-- ✅ **Data Export and Documentation**
-  - 10 files exported
-  - Commented and reusable code
-  - Complete executive report
-  - Interactive dashboard
-  - Professional documentation
-
----
-
-## 🎯 Next Steps
-
-### **Short Term (30 days)**
-1. Present analysis to stakeholders
-2. Approve £125K budget for campaigns
-3. Implement VIP program for Champions (866 customers)
-4. Launch urgent reactivation campaign for At Risk (454 customers)
-5. Start email marketing for Potential Loyalists (1,078 customers)
-
-### **Medium Term (60 days)**
-4. Implement loyalty program for Loyal Customers (606 customers)
-5. Launch win-back campaign for About to Sleep (553 customers)
-6. Conduct satisfaction survey with "Other" segment (57 customers)
-7. Create real-time monitoring dashboard
-
-### **Long Term (90+ days)**
-8. Last attempt with Hibernating customers (619 customers)
-9. Remove inactive customers (1+ year) from active list
-10. Redo RFV analysis monthly for tracking
-11. Implement Machine Learning for churn prediction
-12. Develop CLV (Customer Lifetime Value) model
-13. Market Basket Analysis (product association)
-14. Advanced behavioral clustering
-
----
+**Next steps**
+- [ ] Compare the rule-based segments with clustering (e.g. K-Means on scaled, log-transformed RFV)
+- [ ] Remove exact duplicates and measure the impact on the segments
+- [ ] Separate RFV for UK and international customers
+- [ ] Predict churn and customer lifetime value (CLV)
 
 ## 🤝 Contributing
 
@@ -519,31 +237,24 @@ Contributions, ideas and feedback are welcome!
 
 By contributing, you agree that your contribution is shared under the same license as this project.
 
----
-
 ## 📜 License
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)**.
+This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)](LICENSE.md).
 
-### You are free to:
-- **Share** — copy and redistribute the material in any medium or format
+**What this means:**
+- ✅ You may **share** this work with **attribution**
+- ❌ You may **not** use it for **commercial purposes**
+- ❌ You may **not** distribute **modified versions**
 
-### Under the following terms:
-- **Attribution** — You must give appropriate credit
-- **NonCommercial** — You may not use the material for commercial purposes
-- **NoDerivatives** — If you remix, transform, or build upon the material, you may not distribute the modified material
+## 🙏 Acknowledgments
 
-For more details, see the [LICENSE.md](LICENSE.md) file.
+- [DNC School](https://www.escoladnc.com.br/) for the challenge
+- Daqing Chen for the [Online Retail dataset](https://archive.ics.uci.edu/dataset/352/online+retail) (UCI Machine Learning Repository)
 
 ---
 
 <div align="center">
-  <p><strong>📊 RFV Analysis Project</strong></p>
-  <p>DNC Challenge | 4,233 customers analyzed | £6.1M in revenue</p>
-  <p><i>All challenge requirements successfully completed ✅</i></p>
-  <br>
-  <p>
-    <a href="https://github.com/Laurentius96">GitHub</a> •
-    <a href="https://www.linkedin.com/in/cb-lorenzo/">LinkedIn</a>
-  </p>
+
+**Lorenzo C. Bianchi** · [GitHub](https://github.com/Laurentius96) · [LinkedIn](https://www.linkedin.com/in/cb-lorenzo/)
+
 </div>

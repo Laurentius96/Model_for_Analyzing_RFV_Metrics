@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>RFV Executive Report</title>
+<style>body { font-family: Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+.head { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 35px; text-align: center; border-radius: 10px; margin-bottom: 25px; }
+.sec { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 10px; } h2 { color: #667eea; }
+table { width: 100%; border-collapse: collapse; } th { background: #667eea; color: #fff; padding: 10px; text-align: left; } td { padding: 9px; border-bottom: 1px solid #ddd; }</style></head>
+<body><div class="head"><h1>📊 RFV Executive Report</h1><p>Online Retail dataset · Dec 2010 to Nov 2011 · generated 2026-10-10 19:48</p></div>
+<div class="sec"><h2>Summary</h2><p><b>4,233</b> customers · <b>365,327</b> clean transaction lines · revenue <b>£6,129,263</b></p>
+<p>👑 Champions are <b>20.5%</b> of customers and generate <b>60.9%</b> of revenue.</p></div>
+<div class="sec"><h2>Segments</h2><table><tr><th>Segment</th><th>Customers</th><th>% customers</th><th>Revenue</th><th>% revenue</th><th>Avg. recency (days)</th><th>Avg. orders</th></tr><tr><td>👑 Champions</td><td>866</td><td>20.5%</td><td>£3,732,316</td><td>60.9%</td><td>12</td><td>10.9</td></tr><tr><td>🌟 Loyal Customers</td><td>606</td><td>14.3%</td><td>£908,933</td><td>14.8%</td><td>33</td><td>4.4</td></tr><tr><td>⚠️ At Risk</td><td>454</td><td>10.7%</td><td>£575,338</td><td>9.4%</td><td>162</td><td>3.7</td></tr><tr><td>💎 Potential Loyalists</td><td>1,078</td><td>25.5%</td><td>£494,986</td><td>8.1%</td><td>31</td><td>1.5</td></tr><tr><td>😴 About to Sleep</td><td>553</td><td>13.1%</td><td>£196,107</td><td>3.2%</td><td>120</td><td>1.6</td></tr><tr><td>🪦 Hibernating</td><td>619</td><td>14.6%</td><td>£146,887</td><td>2.4%</td><td>272</td><td>1.0</td></tr><tr><td>❓ Other</td><td>57</td><td>1.4%</td><td>£74,697</td><td>1.2%</td><td>186</td><td>1.4</td></tr></table></div>
+<div class="sec"><h2>Method</h2><p>Cleaning (no CustomerID, cancellations, invalid values, partial December 2011 and 1st–99th percentile outliers removed) →
+RFV metrics per customer → quintile scores 1–5 → ordered segmentation rules. Full code: <code>notebooks/main_analysis.ipynb</code>.</p></div>
+</body></html>
