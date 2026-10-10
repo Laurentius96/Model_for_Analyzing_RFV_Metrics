@@ -509,6 +509,18 @@ All requirements were successfully met:
 
 ---
 
+## 🤝 Contributing
+
+Contributions, ideas and feedback are welcome!
+
+- 🐛 **Found a bug or something unclear?** [Open an issue](https://github.com/Laurentius96/Model_for_Analyzing_RFV_Metrics/issues/new) describing what happened and how to reproduce it.
+- 💡 **Have an idea or a question?** [Open an issue](https://github.com/Laurentius96/Model_for_Analyzing_RFV_Metrics/issues/new) and tell me about it.
+- 🔧 **Want to propose a fix?** Fork the repository, create a branch (`git checkout -b fix/short-description`), commit your changes and open a pull request explaining what changed and why.
+
+By contributing, you agree that your contribution is shared under the same license as this project.
+
+---
+
 ## 📜 License
 
 This project is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)**.
@@ -531,9 +543,7 @@ For more details, see the [LICENSE.md](LICENSE.md) file.
   <p><i>All challenge requirements successfully completed ✅</i></p>
   <br>
   <p>
-    <a href="https://github.com/yourusername">GitHub</a> •
-    <a href="https://linkedin.com/in/yourprofile">LinkedIn</a> •
-    <a href="mailto:your.email@example.com">Contact</a>
+    <a href="https://github.com/Laurentius96">GitHub</a> •
+    <a href="https://www.linkedin.com/in/cb-lorenzo/">LinkedIn</a>
   </p>
 </div>
-'''
