@@ -142,7 +142,7 @@ Rules are evaluated **in order** and the first match wins:
 | ❓ Other | 57 lapsed customers with one high-value order (avg. ticket £1,293) | Investigate why they left |
 | 📈 Seasonality | Revenue climbs from September and peaks in **November 2011 (£916K)** | Plan stock and campaigns for Q4 |
 
-## 🖥️ Interactive Dashboard
+## 💻 Interactive Dashboard
 
 <div align="center">
   <img src="assets/dashboard_preview.png" alt="RFV dashboard with KPIs, monthly revenue line chart, segment cards, score distribution and top 10 countries by revenue" width="85%">
